@@ -28,7 +28,7 @@ def generate_image(groups, font_dir):
         else:
             return fonts['black']
     
-    # First pass: calculate required size
+
     x, y = MARGIN, MARGIN
     line_height = FONT_SIZE + 10
     max_x, max_y = 0, 0
@@ -45,7 +45,6 @@ def generate_image(groups, font_dir):
     width = int(max_x + MARGIN)
     height = int(max_y + 2 * MARGIN)
     
-    # Second pass: draw
     image = Image.new('RGB', (width, height), 'white')
     draw = ImageDraw.Draw(image)
     x, y = MARGIN, MARGIN
