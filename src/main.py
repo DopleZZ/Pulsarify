@@ -2,14 +2,12 @@ from data_reader import read_z_values, read_text
 from text_processor import assign_boldness
 from random_boldness import assign_boldness_random
 from image_generator import generate_image
-import os
-
 
 def choose_generator():
-    print('Выберите генератор:')
-    print('1) Детерминуемый (по значениям пульсара)')
-    print('2) Случайный (каждой букве назначается случайная жирность)')
-    choice = input('Введите 1 или 2 (по умолчанию 1): ').strip()
+    print('генератор:')
+    print('1) детерминуемый (по значениям пульсара)')
+    print('2) случайный (каждой букве назначается случайная жирность)')
+    choice = input('1 или 2 (по умолчанию 1): ').strip()
     return choice
 
 
@@ -19,7 +17,7 @@ def main():
 
     choice = choose_generator()
     if choice == '2':
-        seed_input = input('Ввести целое seed для случайного генератора: ').strip()
+        seed_input = input('целое seed для случайного генератора: ').strip()
         seed = int(seed_input) if seed_input.isdigit() else None
         groups = assign_boldness_random(text, seed=seed)
     else:
