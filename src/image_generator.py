@@ -3,6 +3,8 @@ import os
 
 FONT_SIZE = 30
 MARGIN = 20
+TEXT_COLOR = 'gold'
+BG_COLOR = 'black'
 
 def generate_image(groups, font_dir):
     fonts = {
@@ -45,7 +47,7 @@ def generate_image(groups, font_dir):
     width = int(max_x + MARGIN)
     height = int(max_y + 2 * MARGIN)
     
-    image = Image.new('RGB', (width, height), 'white')
+    image = Image.new('RGB', (width, height), BG_COLOR)
     draw = ImageDraw.Draw(image)
     x, y = MARGIN, MARGIN
     for char, z in groups:
@@ -58,6 +60,6 @@ def generate_image(groups, font_dir):
         if x + (bbox[2] - bbox[0]) > width - MARGIN:
             x = MARGIN
             y += line_height
-        draw.text((x, y), char, fill='black', font=font)
+        draw.text((x, y), char, fill=TEXT_COLOR, font=font)
         x += bbox[2] - bbox[0]
     return image
