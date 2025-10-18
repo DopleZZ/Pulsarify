@@ -14,7 +14,6 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +23,7 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.10"
-        cache: 'pip'  # Кэширование зависимостей для ускорения сборок
+        cache: 'pip'
         
     - name: Display Python version
       run: python -c "import sys; print(f'Python version: {sys.version}')"
@@ -32,14 +31,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        # Сначала проверяем и устанавливаем зависимости проекта
         if [ -f requirements.txt ]; then 
           echo "Installing dependencies from requirements.txt"
           pip install -r requirements.txt
         else
           echo "No requirements.txt found"
         fi
-        # Устанавливаем инструменты для тестирования и линтинга
         pip install flake8 pytest
         
     - name: List installed packages
@@ -54,13 +51,10 @@ jobs:
         
     - name: Lint with flake8
       run: |
-        # Проверяем есть ли Python файлы для линтинга
         python_files=$(find . -name "*.py" -type f | head -1)
         if [ -n "$python_files" ]; then
           echo "Running flake8 linting..."
-          # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
         else
           echo "No Python files found, skipping linting"
@@ -68,32 +62,30 @@ jobs:
         
     - name: Test with pytest
       run: |
-        # Проверяем наличие тестов
         test_files=$(find . -name "test_*.py" -o -name "*_test.py" -type f | head -1)
         if [ -n "$test_files" ] || [ -d "tests" ]; then
           echo "Running tests with pytest..."
           pytest -v --tb=short
         else
           echo "No test files found, creating and running basic test..."
-          # Создаем простой тест для проверки работоспособности
-          cat > test_basic.py << EOF
-          def test_basic():
-              assert 1 + 1 == 2
+          cat > test_basic.py << 'EOF'
+def test_basic():
+    assert 1 + 1 == 2
               
-          def test_environment():
-              import sys
-              assert sys.version_info.major == 3
-              assert sys.version_info.minor == 10
-          EOF
+def test_environment():
+    import sys
+    assert sys.version_info.major == 3
+    assert sys.version_info.minor == 10
+EOF
           pytest -v test_basic.py
         fi
         
     - name: Build success
       if: success()
-      run: echo "✅ Build completed successfully!"
+      run: echo "Build completed successfully!"
       
     - name: Build failed
       if: failure()
       run: |
-        echo "❌ Build failed!"
+        echo "Build failed!"
         echo "Check the steps above for detailed error information"
