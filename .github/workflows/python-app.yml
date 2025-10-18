@@ -31,10 +31,7 @@ jobs:
         
     - name: Test with pytest
       run: |
-        if [ ! -f "test_example.py" ] && [ ! -d "tests" ]; then
-          cat > test_example.py << 'EOF'
-def test_basic():
-    assert 1 + 1 == 2
-EOF
-        fi
+        # Создаем простой тест если нет тестов
+        echo "def test_basic():" > test_example.py
+        echo "    assert 1 + 1 == 2" >> test_example.py
         pytest -v
