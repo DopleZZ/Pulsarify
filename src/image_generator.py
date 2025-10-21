@@ -3,8 +3,8 @@ import os
 
 FONT_SIZE = 30
 MARGIN = 20
-TEXT_COLOR = 'gold'
-BG_COLOR = 'black'
+TEXT_COLOR = 'black'
+BG_COLOR = 'white'
 
 def generate_image(groups, font_dir):
     fonts = {

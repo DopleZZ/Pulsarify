@@ -4,6 +4,7 @@ from random_boldness import assign_boldness_random
 from vertical_invert_boldness import assign_boldness_vertical_inverted
 from vertical_invert_chaotic import assign_boldness_vertical_chaotic
 from image_generator import generate_image
+from svg_generator import generate_svg
 
 def choose_generator():
     print('генератор:')
@@ -39,8 +40,12 @@ def main():
         groups = assign_boldness(text, z_values)
 
     font_dir = 'data/11zon_zip'
-    image = generate_image(groups, font_dir)
-    image.save('output.png')
+    out_format = input('output format: png or svg (по умолчанию png): ').strip().lower()
+    if out_format == 'svg':
+        generate_svg(groups, font_dir, 'output.svg')
+    else:
+        image = generate_image(groups, font_dir)
+        image.save('output.png')
 
 
 if __name__ == '__main__':
