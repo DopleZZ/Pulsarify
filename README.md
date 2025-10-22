@@ -33,4 +33,3 @@ chmod +x scripts/build_macos_dmg.sh
 Notes and caveats
 -----------------
 - The build script creates a temporary virtualenv to avoid contaminating your system environment.
-- The produced `.app` and `.dmg` are not codesigned or notarized. To distribute outside your machine you must codesign and notarize with Apple developer account.
